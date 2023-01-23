@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum eLoadingStatus
 {
@@ -21,7 +22,9 @@ public class UIRootLoading : MonoBehaviour
     private AsyncOperation unLoadDone, loadLevelDone;
     private float loadingLimitTime;
 
-    const float MAX_LOADING_TIME = 1.0f;    // 로딩시간은 최소 1초 이상
+    [SerializeField] private Slider loadingSlider;
+
+    const float MAX_LOADING_TIME = 4.0f;    // 로딩시간은 최소 1초 이상
 
     void Awake()
     {
@@ -72,6 +75,7 @@ public class UIRootLoading : MonoBehaviour
         loadingLimitTime = MAX_LOADING_TIME;
         while (loadingState == eLoadingStatus.NextScene)
         {
+            loadingSlider.value = 1 - (loadingLimitTime - 1) / (MAX_LOADING_TIME - 1);
             loadingLimitTime -= Time.deltaTime;
             if (loadLevelDone.isDone && loadingLimitTime <= 0)
             {

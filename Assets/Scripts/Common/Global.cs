@@ -18,26 +18,38 @@ public class Global
     public static Transform gMainCamTrm;
     public static Camera mainCam;
 
+    //´ÙÀ½À¸·Î ¹Ù²ð ¾Àµé
+    public eSceneName nextScene = eSceneName.None;
 }
 
 public enum ePrefabs
 {
     None = -1,
     MainCamera,
+
     HEROS = 1000,
     HeroMan,
     HeroGirl,
+
     MANAGERS = 2000,
     GameManager,
     PoolManager,
+    Managers,
+
     UI = 3000,
     UIRoot,
     UIRootLoading,
     UIRootTitle,
     UIRootGame,
+
     Object = 4000,
     EmptyObj,
     Cube,
+
+    ROOM = 5000,
+    BattleRoom,
+    EventRoom,
+    ShopRoom,
 }
 
 public enum eSceneName
@@ -46,7 +58,9 @@ public enum eSceneName
     Loading,
     Title,
     Game,
+    Test,
 }
+
 
 public class GameSceneClass
 {
@@ -61,4 +75,11 @@ public enum eGameState
     None,
     Playing,
     Paused,
+}
+
+public enum eRoom
+{
+    Battle,
+    Event,
+    Shop,
 }

@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoSingleton<PoolManager>
 {
     // 생성한 오브젝트를 MGPool오브젝트의 자식으로 넣기위해
     public Transform myTrm;
 
     // 풀매니져의 전체 오브젝트들을 ePrefabs키로, List<CONEntity>를 값으로 저장
-    private Dictionary<ePrefabs, List<CONEntity>> poolListDic;
+    public Dictionary<ePrefabs, List<CONEntity>> poolListDic;
 
     // 모든 종류의 게임오브젝트를 담아둠
     public List<GameObject> poolAllObjList;

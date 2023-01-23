@@ -29,7 +29,7 @@ public class GameAwake : MonoBehaviour
 
         _sb = new StringBuilder();
 
-        //this.gameObject.hideFlags = HideFlags.HideAndDontSave;
+        this.gameObject.hideFlags = HideFlags.HideAndDontSave; //안보이게 하기
     }
 
     private void Start()

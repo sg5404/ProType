@@ -6,44 +6,66 @@ public class GameManager : MonoBehaviour
 {
     // public MGTeam gTeamManager;
     // public MGStage gStageManager;
-
+    FrameWork framWork;
     void Awake()
     {
         GameSceneClass._gameManager = this;
 
         InitCamera();
-
-         //gTeamManager = new MGTeam();
-         //gStageManager = new MGStage();
-
         Global.gameState = eGameState.Playing;
+
+        framWork = GetComponent<FrameWork>();
+
+        framWork.FirstAwkae();
+    }
+
+    private void Start()
+    {
+        framWork.OnAwake();
+        framWork.OnStart();
     }
 
     private void Update()
     {
         if (Global.gameState == eGameState.Playing)
         {
-            // 각 기능 클래스들의 업데이트를 여기 집중관리해줌
+            framWork.OnUpdate();
         }
     }
 
     void InitCamera()
     {
-        Debug.Log("실행됨히히");
+        Global.gMainCamTrm = FindObjectOfType<Camera>().transform;
+
         if (Global.gMainCamTrm == null)
         {
             Global.gMainCamTrm = ((GameObject.Instantiate(Global.prefabsDic[ePrefabs.MainCamera])) as GameObject).transform;
+        }
 
-            if (Global.gMainCamTrm != null)
+        if (Global.gMainCamTrm != null) //카메라 2개면 오류생길듯?
+        {
+            Global.mainCam = Global.gMainCamTrm.GetComponent<Camera>();
+            if (Global.mainCam == null)
             {
-                Global.mainCam = Global.gMainCamTrm.GetComponent<Camera>();
-                if (Global.mainCam == null)
-                {
-                    Debug.LogWarning("Global.mainCam in null");
-                    return;
-                }
+                Debug.LogWarning("Global.mainCam in null");
+                return;
             }
         }
+
+        //if (Global.gMainCamTrm == null)
+        //{
+        //    Global.gMainCamTrm = ((GameObject.Instantiate(Global.prefabsDic[ePrefabs.MainCamera])) as GameObject).transform;
+
+        //    if (Global.gMainCamTrm != null)
+        //    {
+        //        Global.mainCam = Global.gMainCamTrm.GetComponent<Camera>();
+        //        if (Global.mainCam == null)
+        //        {
+        //            Debug.LogWarning("Global.mainCam in null");
+        //            return;
+        //        }
+        //    }
+        //}
     }
 }
 

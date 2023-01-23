@@ -4,25 +4,30 @@ using UnityEngine.UI;
 
 public class UIRootTitle : MonoBehaviour 
 {
-    private float remainTime = 5f;
+    private float remainTime = 0f;
 
-    public Text textWaitSecond;    
+    public Button startButton;    //GameScene으로 씬을 옮겨주는 함수
 
     private void Awake() 
     {
-        if(textWaitSecond)
-            textWaitSecond.text =  remainTime.ToString();
+        InitFirst();
     }
-  
-    void Update () 
-    {
-        remainTime -= Time.deltaTime;
-        if(remainTime <= 0f)
-        {
-            MGScene.Instance.ChangeScene(eSceneName.Game);
-        }
 
-        if(textWaitSecond)
-            textWaitSecond.text = ((int)remainTime).ToString(); 
-	}
+    void InitFirst()
+    {
+        startButton.onClick.AddListener(() => MGScene.Instance.ChangeScene(eSceneName.Game));
+    }
+
+  
+ //   void Update () 
+ //   {
+ //       remainTime -= Time.deltaTime;
+ //       if(remainTime <= 0f)
+ //       {
+ //           MGScene.Instance.ChangeScene(eSceneName.Game);
+ //       }
+
+ //       if(textWaitSecond)
+ //           textWaitSecond.text = ((int)remainTime).ToString(); 
+	//}
 }
