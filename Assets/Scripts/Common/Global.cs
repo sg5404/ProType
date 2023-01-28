@@ -83,3 +83,11 @@ public enum eRoom
     Event,
     Shop,
 }
+
+public enum Pos
+{
+    left = 0,
+    right,
+    top,
+    bottom
+}

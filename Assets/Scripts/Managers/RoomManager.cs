@@ -5,6 +5,9 @@ using System.Text;
 
 public class RoomManager : MonoBehaviour
 {
+    //private Dictionary<Vector3, Transform> RoomDic;
+    //private List<Transform> roomList;
+
     private int RoomCount = 9;
 
     private StringBuilder _sb;
@@ -17,6 +20,7 @@ public class RoomManager : MonoBehaviour
     public void OnAwake()
     {
         _sb = new StringBuilder();
+        //RoomDic = new Dictionary<Vector3, Transform>();
         isRoom = new bool[RoomCount, RoomCount];
         roomX = roomY = RoomCount / 2;
     }
@@ -24,6 +28,7 @@ public class RoomManager : MonoBehaviour
     public void OnStart()
     {
         RoomSpawner();
+
     }
 
     public void OnUpdate()
@@ -57,6 +62,9 @@ public class RoomManager : MonoBehaviour
         CONEntity Room = RandomRoon();
         Room.SetActive(true);
         Room.SetPosition(new Vector3(x - RoomCount / 2, y - RoomCount / 2, 1) * 100);
+
+        //여기서 모양을 정해줄까?
+        RoomShape(x, y, Room.gameObject);
     }
 
     /// <summary>
@@ -65,13 +73,9 @@ public class RoomManager : MonoBehaviour
     void InputRoom()
     {
         if(Random.Range(0, 2) == 1)
-        {
             roomX += Random.Range(-1, 2);
-        }
         else
-        {
             roomY += Random.Range(-1, 2);
-        }
 
 
         RangeCheck();
@@ -80,6 +84,7 @@ public class RoomManager : MonoBehaviour
             InputRoom();
         else
             isRoom[roomX, roomY] = true;
+
     }
 
     /// <summary>
@@ -130,5 +135,35 @@ public class RoomManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// 방 모양을 정해주는 함수
+    /// </summary>
+    void RoomShape(int x, int y, GameObject obj)
+    {
+        Room room = obj.GetComponent<Room>();
+
+        if(room == null)
+        {
+            Debug.LogWarning("room 비었음");
+        }
+
+        room.ActiveWalls();
+
+
+
+        if (x - 1 > 0)
+            if (isRoom[y, x - 1]) room.ActiveDoor(Pos.left);
+
+        if (x + 1 < RoomCount)
+            if (isRoom[y, x + 1]) room.ActiveDoor(Pos.right);
+
+        if (y - 1 > 0)
+            if (isRoom[y - 1, x]) room.ActiveDoor(Pos.bottom);
+
+        if (y + 1 < RoomCount)
+            if (isRoom[y + 1, x]) room.ActiveDoor(Pos.top);
+
     }
 }
