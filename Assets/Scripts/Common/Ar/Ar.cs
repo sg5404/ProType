@@ -44,7 +44,6 @@ public class Ar : MonoBehaviour
         MaxHP = 100; //
         HP = MaxHP; //
         ATK = 0; // 나중에 변경
-        AfterMove.AddListener(ShootArrow);
         MouseUp.AddListener(() => { isMoved = true; });
     }
 
@@ -117,6 +116,15 @@ public class Ar : MonoBehaviour
             isMoved = false;
             AfterMove?.Invoke();
         }
+    }
+
+    public void SwordSpin()
+    {
+        Debug.Log("원형 공격");
+        Ar _area = Instantiate(arrow, null);
+        _area.transform.position = transform.position;
+        _area.transform.localScale = new Vector2(3, 3);
+        Destroy(_area.gameObject, 1f);
     }
 
     public void ShootArrow()

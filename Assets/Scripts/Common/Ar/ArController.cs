@@ -11,6 +11,7 @@ public class ArController : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        Debug.Log("클릭을하였아");
         pos = BattleManager.Instance.mousePosition - stickBase.transform.position;
 
         pos = Vector2.ClampMagnitude(pos, stickBase.radius);
