@@ -5,11 +5,12 @@ using UnityEngine.Events;
 
 public class Ar : MonoBehaviour
 {
+    [SerializeField] Ar arrow;
     public float MaxHP { get; set; }
     public float HP { get; set; }
     public float ATK { get; set; }
 
-    protected float pushPower = 5;
+    protected float pushPower = 10;
 
     protected Vector2 defaultScale = new Vector2(0.5f, 0.5f);
     protected GameObject line;
@@ -22,6 +23,8 @@ public class Ar : MonoBehaviour
     public bool isFirstAttack { get; protected set; }
     public bool isDoubleAttack { get; protected set; }
 
+    protected bool isMoved = false;
+
     public UnityEvent MouseUp;
     public UnityEvent BeforeCrash;
     public UnityEvent AfterCrash;
@@ -31,18 +34,18 @@ public class Ar : MonoBehaviour
     public UnityEvent AfterAttack;
     public UnityEvent BeforeDefence;
     public UnityEvent AfterDefence;
+    public UnityEvent AfterMove;
     public UnityEvent OnOutDie;
     public UnityEvent OnBattleDie;
 
     protected virtual void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        line = transform.GetChild(0).gameObject;
-        hpBar = transform.GetChild(1).GetChild(0);
-        hpImage = hpBar.GetComponentInChildren<SpriteRenderer>();
         MaxHP = 100; //
         HP = MaxHP; //
-        ATK = 35; // 나중에 변경
+        ATK = 0; // 나중에 변경
+        AfterMove.AddListener(ShootArrow);
+        MouseUp.AddListener(() => { isMoved = true; });
     }
 
     protected void StatReset() // 수치 초기화
@@ -60,6 +63,7 @@ public class Ar : MonoBehaviour
     protected void FixedUpdate()
     {
         lastVelocity = rigid.velocity;
+        MoveFinish();
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -104,5 +108,41 @@ public class Ar : MonoBehaviour
         }
         hpBar.localScale = new Vector3(Mathf.Clamp(HP / MaxHP, 0, 1), 1, 1);
         return false;
+    }
+
+    protected void MoveFinish()
+    {
+        if(lastVelocity.magnitude==0 && isMoved)
+        {
+            isMoved = false;
+            AfterMove?.Invoke();
+        }
+    }
+
+    public void ShootArrow()
+    {
+        Ar[] ars = FindObjectsOfType<Ar>();
+        Ar shortAr = null;
+        float shortDis = 0;
+        foreach(Ar trs in ars)
+        {
+            float a = Vector2.Distance(transform.position, trs.transform.position);
+            if(shortDis == 0 || a<shortDis)
+            {
+                if (a == 0) continue;
+                shortAr = trs;
+                shortDis = a;
+            }
+        }
+        Ar _arrow = Instantiate(arrow, null);
+        _arrow.transform.position = transform.position;
+        _arrow.SetRigidPower((shortAr.transform.position - transform.position).normalized * 6);
+    }
+
+    public void SetRigidPower(Vector2 power)
+    {
+        rigid = GetComponent<Rigidbody2D>();
+
+        rigid.velocity = power;
     }
 }

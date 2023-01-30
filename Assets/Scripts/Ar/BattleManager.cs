@@ -29,7 +29,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         a.BeforeBattle?.Invoke(); //
         b.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
-
+        Debug.Log("충돌");
         if (a.lastVelocity.magnitude > b.lastVelocity.magnitude)
         {
             a.BeforeAttack?.Invoke();
@@ -40,6 +40,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 var reflect = Vector2.Reflect(a.lastVelocity.normalized, aNomal);
                 a.rigid.velocity = (reflect);
                 b.rigid.velocity = (-reflect + a.lastVelocity / 2);
+                Debug.Log("데미지 계산");
             }
 
             a.AfterAttack?.Invoke();
@@ -55,6 +56,7 @@ public class BattleManager : MonoSingleton<BattleManager>
                 var reflect = Vector2.Reflect(b.lastVelocity.normalized, bNomal);
                 b.rigid.velocity = (reflect);
                 a.rigid.velocity = (-reflect + b.lastVelocity / 2);
+                Debug.Log("데미지 계산");
             }
 
             b.AfterAttack?.Invoke();
