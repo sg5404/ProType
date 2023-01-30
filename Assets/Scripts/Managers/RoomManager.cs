@@ -61,7 +61,7 @@ public class RoomManager : MonoBehaviour
     {
         CONEntity Room = RandomRoon();
         Room.SetActive(true);
-        Room.SetPosition(new Vector3(x - RoomCount / 2, y - RoomCount / 2, 1) * 100);
+        Room.SetPosition(new Vector3(x - RoomCount / 2, y - RoomCount / 2, 1) * 95);
 
         //여기서 모양을 정해줄까?
         RoomShape(x, y, Room.gameObject);
@@ -153,17 +153,17 @@ public class RoomManager : MonoBehaviour
 
 
 
-        if (x - 1 > 0)
-            if (isRoom[y, x - 1]) room.ActiveDoor(Pos.left);
+        if (x - 1 >= 0)
+            if (isRoom[y, x - 1]) room.ActiveDoor((int)Pos.left);
 
         if (x + 1 < RoomCount)
-            if (isRoom[y, x + 1]) room.ActiveDoor(Pos.right);
+            if (isRoom[y, x + 1]) room.ActiveDoor((int)Pos.right);
 
-        if (y - 1 > 0)
-            if (isRoom[y - 1, x]) room.ActiveDoor(Pos.bottom);
+        if (y - 1 >= 0)
+            if (isRoom[y - 1, x]) room.ActiveDoor((int)Pos.bottom);
 
         if (y + 1 < RoomCount)
-            if (isRoom[y + 1, x]) room.ActiveDoor(Pos.top);
+            if (isRoom[y + 1, x]) room.ActiveDoor((int)Pos.top);
 
     }
 }
