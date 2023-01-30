@@ -91,3 +91,21 @@ public enum Pos
     top,
     bottom
 }
+
+public enum Item
+{
+    NONE = 0,
+    A,
+    B,
+    C,
+    D
+}
+
+public enum Rarity
+{
+    NORMAL = 0,
+    RARE,
+    EPIC,
+    UNIQUE,
+    LEGENDARY,
+}
