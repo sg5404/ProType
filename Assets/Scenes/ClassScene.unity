@@ -350,7 +350,6 @@ GameObject:
   m_Component:
   - component: {fileID: 960406803}
   - component: {fileID: 960406802}
-  - component: {fileID: 960406804}
   m_Layer: 0
   m_Name: JoyStick
   m_TagString: Untagged
@@ -426,22 +425,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &960406804
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960406801}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
 --- !u!1 &1070604204
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,8 +519,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1105597489}
   - component: {fileID: 1105597490}
-  - component: {fileID: 1105597491}
   - component: {fileID: 1105597492}
+  - component: {fileID: 1105597493}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -612,7 +595,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1105597491
+--- !u!114 &1105597492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105597488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca098e2aeee520140815793e91f254ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ar: {fileID: 1305947395}
+--- !u!58 &1105597493
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -627,21 +623,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6
---- !u!114 &1105597492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105597488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca098e2aeee520140815793e91f254ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ar: {fileID: 1305947395}
-  stickBase: {fileID: 960406804}
+  m_Radius: 0.5
 --- !u!1 &1305947394
 GameObject:
   m_ObjectHideFlags: 0
