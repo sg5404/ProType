@@ -121,13 +121,13 @@ public class Ar : MonoBehaviour
                 return true;
             }
         }
-        hpBar.localScale = new Vector3(Mathf.Clamp(HP / MaxHP, 0, 1), 1, 1);
+        //hpBar.localScale = new Vector3(Mathf.Clamp(HP / MaxHP, 0, 1), 1, 1);
         return false;
     }
 
     protected void MoveFinish()
     {
-        if(lastVelocity.magnitude==0 && isMoved)
+        if(lastVelocity.magnitude<=0.5f && isMoved)
         {
             isMoved = false;
             AfterMove?.Invoke();
