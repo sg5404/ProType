@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7766b753fc349418760d2edbd6a707, type: 3}
   m_Name: testAr
   m_EditorClassIdentifier: 
-  weapon: 1
+  weapon: 0
   bullet: {fileID: 3997128448349154292, guid: 8eb8c202057377d48b7cd0bb01cf9bdd, type: 3}
