@@ -7,11 +7,9 @@ public class ArController : MonoBehaviour
     [SerializeField] Ar ar;
     [SerializeField] CircleCollider2D stickBase;
     private Vector2 pos;
-    private float radius;
 
     private void OnMouseDrag()
     {
-        Debug.Log("클릭을하였아");
         pos = BattleManager.Instance.mousePosition - stickBase.transform.position;
 
         pos = Vector2.ClampMagnitude(pos, stickBase.radius);

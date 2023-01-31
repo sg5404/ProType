@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Ar : MonoBehaviour
 {
-    [SerializeField] Ar arrow;
+    [SerializeField] ArSO arSO;
     public float MaxHP { get; set; }
     public float HP { get; set; }
     public float ATK { get; set; }
@@ -45,12 +45,26 @@ public class Ar : MonoBehaviour
         HP = MaxHP; //
         ATK = 0; // 나중에 변경
         MouseUp.AddListener(() => { isMoved = true; });
+        ClassSet();
     }
 
     protected void StatReset() // 수치 초기화
     {
         HP = MaxHP;
         hpBar.localScale = new Vector3(Mathf.Clamp(HP / MaxHP, 0, 1), 1, 1);
+    }
+
+    protected void ClassSet()
+    {
+        switch(arSO.weapon)
+        {
+            case Weapon.Sword:
+                AfterMove.AddListener(SwordSpin);
+                break;
+            case Weapon.Bow:
+                AfterMove.AddListener(ShootArrow);
+                break;
+        }    
     }
 
     public void Dash(Vector2 drag)
@@ -78,7 +92,7 @@ public class Ar : MonoBehaviour
         }
         else if (collision.transform.CompareTag("Object"))
         {
-            rigid.velocity = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal) * pushPower;
+            rigid.velocity = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal) * pushPower / 2;
             AfterCrash?.Invoke();
         }
     }
@@ -121,7 +135,7 @@ public class Ar : MonoBehaviour
     public void SwordSpin()
     {
         Debug.Log("원형 공격");
-        Ar _area = Instantiate(arrow, null);
+        Ar _area = Instantiate(arSO.bullet, null);
         _area.transform.position = transform.position;
         _area.transform.localScale = new Vector2(3, 3);
         Destroy(_area.gameObject, 1f);
@@ -142,7 +156,7 @@ public class Ar : MonoBehaviour
                 shortDis = a;
             }
         }
-        Ar _arrow = Instantiate(arrow, null);
+        Ar _arrow = Instantiate(arSO.bullet, null);
         _arrow.transform.position = transform.position;
         _arrow.SetRigidPower((shortAr.transform.position - transform.position).normalized * 6);
     }
