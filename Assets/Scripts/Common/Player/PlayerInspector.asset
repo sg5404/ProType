@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78e1a83adc6ebf4ba77de519ed4cd2f, type: 3}
   m_Name: PlayerInspector
   m_EditorClassIdentifier: 
+  PlayerName: "\uAE40\uD76C\uC218"
+  Atk: 0
+  Def: 0
+  Hp: 0
+  ItemAtk: 0
+  ItemDef: 0
+  ItemHp: 0
   Items:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 53ef585633a727f4b81a51d1c9124451, type: 2}
+  - {fileID: 11400000, guid: 53ef585633a727f4b81a51d1c9124451, type: 2}
+  - {fileID: 11400000, guid: 53ef585633a727f4b81a51d1c9124451, type: 2}
