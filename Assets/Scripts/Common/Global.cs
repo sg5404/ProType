@@ -50,6 +50,8 @@ public enum ePrefabs
     BattleRoom,
     EventRoom,
     ShopRoom,
+    HorizontalPass,
+    VerticalPass,
 }
 
 public enum eSceneName
@@ -82,6 +84,12 @@ public enum eRoom
     Battle,
     Event,
     Shop,
+}
+
+public enum ePass
+{
+    Horizontal,
+    Vertical,
 }
 
 public enum Pos

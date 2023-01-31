@@ -51,8 +51,10 @@ MonoBehaviour:
   - {fileID: 2112775040504164418, guid: 2c226cfa442f8284f92ada04df8df4ec, type: 3}
   - {fileID: 7308530180302284702, guid: afcaed2b120c71545ae43a585348cc28, type: 3}
   - {fileID: 1523651336960383492, guid: a237fe1a1e1c273418e1caa05a088138, type: 3}
+  - {fileID: 8213115684244695549, guid: 792f01c54f815474e8a981478cc6c6fb, type: 3}
+  - {fileID: 3269262707380476281, guid: f33d050b146f6f84fa605cfc4dc3a012, type: 3}
   poolEffectList: []
-  poolCharCount: 3
+  poolCharCount: 5
   poolEffectCount: 0
-  poolCharCountList: 050000000300000001000000
+  poolCharCountList: 0500000003000000010000000a0000000a000000
   poolEffectCountList: 
