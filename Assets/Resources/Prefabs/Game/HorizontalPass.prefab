@@ -353,6 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19f4d99030925ec49865372b6e5ed380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myKind: 5004
+  myKind: 5005
   myTrm: {fileID: 0}
   myVelocity: {x: 0, y: 0, z: 0}

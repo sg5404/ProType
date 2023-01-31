@@ -47,6 +47,8 @@ public class RoomManager : MonoBehaviour
             InputRoom();
         }
 
+        roomX = roomY = (RoomCount * 2 - 1) / 2;
+
         for (int y = 0; y < RoomCount * 2 - 1; y++)
         {
             for (int x = 0; x < RoomCount * 2 - 1; x++)
@@ -106,7 +108,7 @@ public class RoomManager : MonoBehaviour
 
     void SpawnRoom(int x, int y)
     {
-        CONEntity Room = RandomRoon();
+        CONEntity Room = RandomRoon(x, y);
         Room.SetActive(true);
         Room.SetPosition(new Vector3(x - (RoomCount * 2 - 1) / 2, y - (RoomCount * 2 - 1) / 2, 1) * 100);
 
@@ -156,16 +158,22 @@ public class RoomManager : MonoBehaviour
     /// 만들 Room을 가져와주는 함수
     /// </summary>
     /// <returns></returns>
-    CONEntity RandomRoon()
+    CONEntity RandomRoon(int x, int y)
     {
         while(true)
         {
-            int rNum = Random.Range(0, System.Enum.GetValues(typeof(eRoom)).Length);
+            int rNum = Random.Range(0, System.Enum.GetValues(typeof(eRoom)).Length - 1);
 
             //이름들고오기
             _sb.Remove(0, _sb.Length);
             _sb.Append(System.Enum.GetName(typeof(eRoom), rNum));
             _sb.Append("Room");
+
+            if(roomX == x && roomY == y)
+            {
+                _sb.Remove(0, _sb.Length);
+                _sb.Append("StartRoom");
+            }
 
             //다른형식으로 만들기
             ePrefabs rRoom = (ePrefabs)System.Enum.Parse(typeof(ePrefabs), _sb.ToString());
