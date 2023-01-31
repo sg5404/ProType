@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum Weapon
 {
+    None,
     Sword,
     Bow,
 }

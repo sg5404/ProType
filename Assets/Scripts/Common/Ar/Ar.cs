@@ -58,6 +58,8 @@ public class Ar : MonoBehaviour
     {
         switch(arSO.weapon)
         {
+            case Weapon.None:
+                return;
             case Weapon.Sword:
                 AfterMove.AddListener(SwordSpin);
                 break;
