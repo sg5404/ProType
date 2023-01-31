@@ -5,14 +5,13 @@ using UnityEngine;
 public class ArController : MonoBehaviour
 {
     [SerializeField] Ar ar;
-    [SerializeField] CircleCollider2D stickBase;
     private Vector2 pos;
 
     private void OnMouseDrag()
     {
-        pos = BattleManager.Instance.mousePosition - stickBase.transform.position;
+        pos = BattleManager.Instance.mousePosition - transform.parent.position;
 
-        pos = Vector2.ClampMagnitude(pos, stickBase.radius);
+        pos = Vector2.ClampMagnitude(pos, 1.5f);
 
         transform.localPosition = pos;
     }
