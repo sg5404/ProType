@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5deea45c834de5d4abcd4b65557febab, type: 3}
-  m_Name: B
+  m_Script: {fileID: 11500000, guid: bc7766b753fc349418760d2edbd6a707, type: 3}
+  m_Name: testAr
   m_EditorClassIdentifier: 
-  name: 
-  item: 2
-  rarity: 2
+  weapon: 0
+  bullet: {fileID: 3997128448349154292, guid: 8eb8c202057377d48b7cd0bb01cf9bdd, type: 3}
