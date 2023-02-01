@@ -204,10 +204,6 @@ public class RoomManager : MonoBehaviour
             Debug.LogWarning("room ºñ¾úÀ½");
         }
 
-        room.ActiveWalls();
-
-
-
         if (x - 2 >= 0)
             if (isRoom[y, x - 2]) room.ActiveDoor((int)Pos.left);
 

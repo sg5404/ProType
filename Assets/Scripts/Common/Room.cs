@@ -5,8 +5,6 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     [SerializeField] List<GameObject> Walls;
-    [SerializeField] List<GameObject> DoorWalls;
-    [SerializeField] List<GameObject> Doors;
 
     bool[] isPos;
     public bool isEnemy;
@@ -19,8 +17,7 @@ public class Room : MonoBehaviour
 
     public void OnUpdate()
     {
-        //맵에 몬스터가 없고, 플레이어가 안에 있다면 모든 문 없애기
-        //플레이어가 안에 없으면, 문 안닫음
+
     }
 
     void boolInit()
@@ -31,20 +28,8 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void ActiveWalls()
-    {
-        foreach(var wall in Walls)
-        {
-            wall.SetActive(true);
-        }
-    }
-
     public void ActiveDoor(int num)
     {
-        Walls[num].SetActive(false);
-        DoorWalls[num].SetActive(true);
-        Doors[num].SetActive(true);
-
         isPos[num] = true;
     }
 
@@ -56,9 +41,8 @@ public class Room : MonoBehaviour
     {
         for(int i = 0; i < 4; i++)
         {
+            if (!isPos[i]) continue;
             Walls[i].SetActive(true);
-            DoorWalls[i].SetActive(false);
-            Doors[i].SetActive(false);
         }
     }
 
@@ -71,8 +55,6 @@ public class Room : MonoBehaviour
         {
             if (!isPos[i]) continue;
             Walls[i].SetActive(false);
-            DoorWalls[i].SetActive(true);
-            Doors[i].SetActive(true);
         }
     }
 
