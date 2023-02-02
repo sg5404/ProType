@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArStamina : MonoBehaviour
+public class PlayerStamina : MonoBehaviour
 {
     public bool isUsed { get; private set; }
     private float useCooltime;

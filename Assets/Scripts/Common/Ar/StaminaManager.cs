@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class StaminaManager : MonoSingleton<StaminaManager>
 {
-    private ArStamina[] staminas;
+    private PlayerStamina[] staminas;
 
     private void Start()
     {
-        staminas = GetComponentsInChildren<ArStamina>();
+        staminas = GetComponentsInChildren<PlayerStamina>();
     }
 
     public bool UseStamina(float power)
     {
-        foreach(ArStamina stamina in staminas)
+        foreach(PlayerStamina stamina in staminas)
         {
             if (stamina.Use(power))
             {

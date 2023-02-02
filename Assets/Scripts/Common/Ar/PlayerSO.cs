@@ -9,9 +9,12 @@ public enum Weapon
     Bow,
 }
 
-[CreateAssetMenu(menuName = "SO/Ar"), System.Serializable]
-public class ArSO : ScriptableObject
+[CreateAssetMenu(menuName = "SO/Ar/Player"), System.Serializable]
+public class PlayerSO : ScriptableObject
 {
     public Weapon weapon;
     public Ar bullet;
+    public float HP;
+    public float ATK;
+    public float pushPower;
 }

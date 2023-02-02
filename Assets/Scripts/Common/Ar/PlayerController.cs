@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Ar ar;
+    private Player player;
     private Vector2 pos;
     private float power;
+
+    private void Start()
+    {
+        player = FindObjectOfType<Player>();
+    }
 
     private void OnMouseDrag()
     {
@@ -21,7 +26,7 @@ public class ArController : MonoBehaviour
     {
         power = Vector2.Distance(transform.localPosition, transform.parent.position);
         if(StaminaManager.Instance.UseStamina(power))
-            ar.Dash(transform.localPosition);
+            player.Dash(transform.localPosition);
         transform.localPosition = Vector3.zero;
     }
 }
