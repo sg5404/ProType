@@ -92,7 +92,7 @@ public class Ar : MonoBehaviour
         }
         else if (collision.transform.CompareTag("Object"))
         {
-            rigid.velocity = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal) * lastVelocity.magnitude;
+            rigid.velocity = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal) * pushPower / 2;
             AfterCrash?.Invoke();
         }
     }
@@ -173,6 +173,7 @@ public class Ar : MonoBehaviour
         if(CompareTag("Out"))
         {
             Debug.Log("나감");
+            //나중에 가장 가까운거 찾아서 돌아오는것까지 만들어줄예정
         }
     }
 }
