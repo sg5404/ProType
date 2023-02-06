@@ -7,7 +7,6 @@ public class Player : Ar
 {
     [SerializeField] PlayerSO playerSO;
 
-    private float pushPower;
     private bool isMoved = false;
 
     public UnityEvent MouseUp;

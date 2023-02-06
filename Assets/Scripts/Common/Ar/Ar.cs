@@ -13,6 +13,8 @@ public class Ar : MonoBehaviour
     public bool isFirstAttack { get; protected set; }
     public bool isDoubleAttack { get; protected set; }
 
+    protected float pushPower;
+
     public UnityEvent BeforeCrash;
     public UnityEvent AfterCrash;
     public UnityEvent BeforeBattle;
