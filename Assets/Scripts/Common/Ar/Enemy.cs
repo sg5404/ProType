@@ -12,6 +12,16 @@ public class Enemy : Ar
         ClassSet();
     }
 
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (collision.transform.CompareTag("Player") || collision.transform.CompareTag("Enemy"))
+        {
+            BeforeCrash?.Invoke(); //충돌 직전 발동하는 트리거
+            BattleManager.Instance.EnemyCrashSet(this, collision.contacts[0].normal);
+        }
+    }
+
     private void ClassSet()
     {
         MaxHP = enemySO.HP;

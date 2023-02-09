@@ -10,7 +10,6 @@ public class Ar : MonoBehaviour
     public Rigidbody2D rigid { get; protected set; }
     public Vector2 lastVelocity { get; protected set; }
 
-    public bool isFirstAttack { get; protected set; }
     public bool isDoubleAttack { get; protected set; }
 
     protected float pushPower;
@@ -36,14 +35,9 @@ public class Ar : MonoBehaviour
         HP = MaxHP;
     }
 
-    protected void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Ar"))
-        {
-            BeforeCrash?.Invoke(); //충돌 직전 발동하는 트리거
-            BattleManager.Instance.CrashSet(this, collision.contacts[0].normal);
-        }
-        else if (collision.transform.CompareTag("Out"))
+        if (collision.transform.CompareTag("Out"))
         {
             OnOutDie.Invoke();
         }

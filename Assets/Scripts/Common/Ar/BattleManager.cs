@@ -4,42 +4,83 @@ using UnityEngine;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
-    private Ar a = null, b = null;
-    private Vector2 aNomal, bNomal;
+    private Player player = null;
+    private Enemy a = null, b = null;
+    private Vector2 aNomal, bNomal, pNomal;
     public Vector3 mousePosition { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
 
-    public void CrashSet(Ar bullet, Vector2 nomal)
+    // 플레이어 vs 적 -> 적만 데미지
+    // 적 vs 적 -> 양쪽 다 데미지
+    // 1. Ar에 isEnemy 넣어서 검사
+    // 2. Enemy랑 player가 충돌하는 조건을 한번 더 나누기
+
+    public void PlayerCrashSet(Vector2 nomal)
+    {
+        if (player == null) player = FindObjectOfType<Player>();
+        pNomal = nomal;
+        if (a != null) PlayerCrashResult(); 
+    }
+
+    public void EnemyCrashSet(Enemy bullet, Vector2 nomal)
     {
         if (a == null)
         {
             a = bullet;
             aNomal = nomal;
 
+            if(player!=null) PlayerCrashResult();
         }
         else if (b == null)
         {
             b = bullet;
             bNomal = nomal;
 
-            CrashResult();
+            EnemyCrashResult();
         }
     }
 
-    private void CrashResult()
+    private void PlayerCrashResult()
+    {
+        player.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
+        a.BeforeBattle?.Invoke(); //
+        Debug.Log("플레이어 충돌");
+
+        player.BeforeDefence?.Invoke();
+        a.BeforeAttack?.Invoke();
+
+        if (DamageCalculate())
+        {
+            var reflect = Vector2.Reflect(player.lastVelocity.normalized, pNomal);
+            player.rigid.velocity = (reflect);
+            a.rigid.velocity = (-reflect + a.lastVelocity / 2);
+            Debug.Log("데미지 계산");
+        }
+
+        player.AfterAttack?.Invoke();
+        a.AfterDefence?.Invoke();
+
+        player.AfterBattle?.Invoke(); // 공격 직후 발동하는 트리거
+        a.AfterBattle?.Invoke(); //
+
+        player.AttackFinish();
+        a.AttackFinish();
+        a = null;
+    }
+    private void EnemyCrashResult()
     {
         a.BeforeBattle?.Invoke(); //
         b.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
-        Debug.Log("충돌");
+        Debug.Log("적 끼리 충돌");
         if (a.lastVelocity.magnitude > b.lastVelocity.magnitude)
         {
             a.BeforeAttack?.Invoke();
             b.BeforeDefence?.Invoke();
 
-            if (DamageCalculate())
+            if (EnemyDamageCalculate())
             {
                 var reflect = Vector2.Reflect(a.lastVelocity.normalized, aNomal);
                 a.rigid.velocity = (reflect);
-                b.rigid.velocity = (-reflect + a.lastVelocity / 2);
+                b.rigid.velocity = (-reflect + a.lastVelocity);
                 Debug.Log("데미지 계산");
             }
 
@@ -55,7 +96,7 @@ public class BattleManager : MonoSingleton<BattleManager>
             {
                 var reflect = Vector2.Reflect(b.lastVelocity.normalized, bNomal);
                 b.rigid.velocity = (reflect);
-                a.rigid.velocity = (-reflect + b.lastVelocity / 2);
+                a.rigid.velocity = (-reflect + b.lastVelocity);
                 Debug.Log("데미지 계산");
             }
 
@@ -73,100 +114,38 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private bool DamageCalculate()
     {
-        float aFinalDamage = a.ATK; //
-        float bFinalDamage = b.ATK; //여기에 패시브스킬 등으로 변하는 데미지 계산
-        if (a.isDoubleAttack)
+        float FinalDamage = player.ATK; // 여기에 패시브스킬 등으로 변하는 데미지 계산
+        if (player.isDoubleAttack)
         {
-            if (b.isDoubleAttack)
+            a.HP -= FinalDamage; // 
+            if (a.HP <= 0)
             {
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
+                return false;
             }
-            else if (b.isFirstAttack)
-            {
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-                a.HP -= bFinalDamage; // 
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
-            else
-            {
-                b.HP -= aFinalDamage; // 
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
-        }
-        else if (a.isFirstAttack)
-        {
-            if (b.isDoubleAttack)
-            {
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
-            else if (b.isFirstAttack)
-            {
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
-            else
-            {
-                b.HP -= aFinalDamage; // 
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
+            a.HP -= FinalDamage; // 여기에 속도비례 보정 들어가야함
         }
         else
         {
-            if (b.isDoubleAttack)
+            if (a.HP <= 0)
             {
-                a.HP -= bFinalDamage; //여기에 속도비례 보정 들어가야함
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
+                return false;
             }
-            else if (b.isFirstAttack)
-            {
-                a.HP -= bFinalDamage; // 여기에 속도비례 보정 들어가야함
-                if (a.HP <= 0 || b.HP <= 0)
-                {
-                    return false;
-                }
-                b.HP -= aFinalDamage; // 
-            }
-            else
-            {
-                a.HP -= bFinalDamage; // 
-                b.HP -= aFinalDamage; //여기에 속도비례 보정 들어가야함
-            }
+            a.HP -= FinalDamage; //여기에 속도비례 보정 들어가야함
         }
-        if (a.HP <= 0 || b.HP <= 0)
+        if (a.HP <= 0)
         {
             return false;
         }
+        return true;
+    }
+
+    private bool EnemyDamageCalculate()
+    {
+        float FinalDamage = player.ATK; // 여기에 패시브스킬 등으로 변하는 데미지 계산
+
+        a.HP -= FinalDamage;
+        b.HP -= FinalDamage;
+
         return true;
     }
 }
