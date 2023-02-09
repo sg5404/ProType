@@ -13,6 +13,8 @@ public class Room : MonoBehaviour
     {
         isPos = new bool[4];
         boolInit();
+
+        isEnemy = true; //없애야함
     }
 
     public void OnUpdate()

@@ -28,4 +28,13 @@ public class Enemy : Ar
         HP = MaxHP;
         ATK = enemySO.ATK;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       if(collision.CompareTag("Out"))
+       {
+            //그냥 죽이면 됨
+            //Destroy 말고 SetActive 로 꺼주게만 해주면 좋을듯
+       }
+    }
 }
