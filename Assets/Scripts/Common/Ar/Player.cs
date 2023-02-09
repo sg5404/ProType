@@ -108,5 +108,35 @@ public class Player : Ar
         _arrow.SetRigidPower((shortAr.transform.position - transform.position).normalized * 6);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Out"))
+        {
+            Debug.Log("나감");
 
+            float temp = 0;
+            float _distance = 100000;
+            Room closeRoom = new Room();             //가장 가까운 룸
+
+            //가까운거 찾아서 돌아오는거
+            Room[] rooms = FindObjectsOfType<Room>();
+
+            //가장 가까운 룸을 찾기 위한 과정
+            foreach (Room room in rooms)
+            {
+                temp = Vector3.Distance(transform.position, room.transform.position);
+                if (temp < _distance)
+                {
+                    _distance = temp;
+                    closeRoom = room;
+                }
+            }
+
+            //플레이어 피 줄이는거 만들어 주셈
+
+
+            //플레이어가 낙사한 후 다시 돌아오게하기
+            transform.position = closeRoom.gameObject.transform.position;
+        }
+    }
 }
