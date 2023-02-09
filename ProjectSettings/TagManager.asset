@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ar
   - Object
   - Out
+  - Enemy
   layers:
   - Default
   - TransparentFX

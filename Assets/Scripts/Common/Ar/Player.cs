@@ -38,6 +38,16 @@ public class Player : Ar
         MouseUp?.Invoke(); // 발사 직후 발동하는 트리거
     }
 
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (collision.transform.CompareTag("Enemy"))
+        {
+            BeforeCrash?.Invoke(); //충돌 직전 발동하는 트리거
+            BattleManager.Instance.PlayerCrashSet(collision.contacts[0].normal);
+        }
+    }
+
     private void MoveFinish()
     {
         if (lastVelocity.magnitude <= 0.5f && isMoved)
