@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private Player player;
-    private Vector2 pos;
     private float power;
+    private RectTransform rect;
+    [SerializeField] RectTransform stick;
+    [SerializeField] float stickRange;
 
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        rect = GetComponent<RectTransform>();
     }
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
-        pos = BattleManager.Instance.mousePosition - transform.parent.position;
-        
-        pos = Vector2.ClampMagnitude(pos, 1.5f);
+        var inputDir = eventData.position - rect.anchoredPosition;
+        var clampedDir = inputDir.magnitude < stickRange ? inputDir : inputDir.normalized * stickRange;
 
-        transform.localPosition = pos;
+        stick.anchoredPosition = clampedDir;
     }
 
-    private void OnMouseUp()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        power = Vector2.Distance(transform.localPosition, transform.parent.position);
-        if(StaminaManager.Instance.UseStamina(power))
-            player.Dash(transform.localPosition);
-        transform.localPosition = Vector3.zero;
+        power = Vector2.Distance(stick.localPosition, transform.position)/100;
+        if (StaminaManager.Instance.UseStamina(power))
+            player.Dash(stick.localPosition);
+        stick.anchoredPosition = Vector2.zero;
     }
 }

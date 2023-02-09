@@ -10,6 +10,7 @@ public class Enemy : Ar
     {
         base.Start();
         ClassSet();
+        OnOutDie.AddListener(() => { gameObject.SetActive(false); });
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -34,6 +35,7 @@ public class Enemy : Ar
        if(collision.CompareTag("Out"))
        {
             //그냥 죽이면 됨
+            OnOutDie.Invoke();
             //Destroy 말고 SetActive 로 꺼주게만 해주면 좋을듯
        }
     }

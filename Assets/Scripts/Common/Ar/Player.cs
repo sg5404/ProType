@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Player : Ar
 {
     [SerializeField] PlayerSO playerSO;
+    [SerializeField] Transform resetPosition;
 
     private bool isMoved = false;
 
@@ -18,6 +19,11 @@ public class Player : Ar
         MouseUp.AddListener(() => { isMoved = true; });
         AfterMove.AddListener(() => { isMoved = false; });
         ClassSet();
+        OnOutDie.AddListener(() => {
+            HP -= MaxHP / 10;
+            HPManager.Instance.ChangeHP();
+            transform.position = resetPosition.position;
+        });
     }
 
     private void FixedUpdate()
@@ -34,7 +40,7 @@ public class Player : Ar
     public void Dash(Vector2 drag)
     {
         if (isMoved) AfterMove.Invoke();
-        rigid.velocity = (-drag * pushPower);
+        rigid.velocity = (-drag * pushPower)/100;
         MouseUp?.Invoke(); // 발사 직후 발동하는 트리거
     }
 
@@ -132,10 +138,8 @@ public class Player : Ar
                 }
             }
 
-            //플레이어 피 줄이는거 만들어 주셈
+            OnOutDie.Invoke();
 
-
-            //플레이어가 낙사한 후 다시 돌아오게하기
             transform.position = closeRoom.gameObject.transform.position;
         }
     }

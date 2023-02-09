@@ -9,11 +9,6 @@ public class BattleManager : MonoSingleton<BattleManager>
     private Vector2 aNomal, bNomal, pNomal;
     public Vector3 mousePosition { get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); } }
 
-    // 플레이어 vs 적 -> 적만 데미지
-    // 적 vs 적 -> 양쪽 다 데미지
-    // 1. Ar에 isEnemy 넣어서 검사
-    // 2. Enemy랑 player가 충돌하는 조건을 한번 더 나누기
-
     public void PlayerCrashSet(Vector2 nomal)
     {
         if (player == null) player = FindObjectOfType<Player>();
