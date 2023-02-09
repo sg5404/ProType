@@ -626,6 +626,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 26779040}
+    - target: {fileID: 5830883175823703765, guid: b3c2b9c4e0b284547aeaada2aa451110, type: 3}
+      propertyPath: scriptStr.Array.data[0]
+      value: Hello?
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830883175823703765, guid: b3c2b9c4e0b284547aeaada2aa451110, type: 3}
+      propertyPath: scriptStr.Array.data[1]
+      value: My name is Gihyuen
+      objectReference: {fileID: 0}
     - target: {fileID: 5830883175823703767, guid: b3c2b9c4e0b284547aeaada2aa451110, type: 3}
       propertyPath: m_Name
       value: InteractionObj

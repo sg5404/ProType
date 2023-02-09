@@ -97,4 +97,6 @@ public class Player : Ar
         _arrow.transform.position = transform.position;
         _arrow.SetRigidPower((shortAr.transform.position - transform.position).normalized * 6);
     }
+
+
 }

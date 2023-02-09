@@ -80,12 +80,19 @@ public class Ar : MonoBehaviour
         rigid.velocity = power;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(CompareTag("Out"))
-        {
-            Debug.Log("나감");
-            //나중에 가장 가까운거 찾아서 돌아오는것까지 만들어줄예정
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(CompareTag("Out"))
+    //    {
+    //        Debug.Log("나감");
+    //        //나중에 가장 가까운거 찾아서 돌아오는것까지 만들어줄예정
+
+    //        Room[] rooms = FindObjectsOfType<Room>();
+
+    //        foreach(Room room in rooms)
+    //        {
+    //            if(this)
+    //        }
+    //    }
+    //}
 }

@@ -45,6 +45,7 @@ public enum ePrefabs
     Object = 4000,
     EmptyObj,
     Cube,
+    InteractionObj,
 
     ROOM = 5000,
     BattleRoom,

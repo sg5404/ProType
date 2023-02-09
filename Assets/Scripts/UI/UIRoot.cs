@@ -20,6 +20,7 @@ public class UIRoot : MonoBehaviour
         GameSceneClass.gUiRoot = this;
 
         SetCvsResolution();
+        blackPannel.gameObject.SetActive(false);
     }
 
     private void Update()

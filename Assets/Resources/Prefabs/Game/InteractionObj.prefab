@@ -322,16 +322,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptStr:
-  - adfadfjlajldkfjaljsdfkajsfljal;dfkj;a
-  - Hello aljfdlkjdsklajldjf;aljfd;lajlfdksja;lsfdkj
+  - Hello?
+  - My name is Gihyuen
   textPanel: {fileID: 5830883175713843652}
   scriptText: {fileID: 5830883176244204508}
   printState: 0
-  printTime: 0.5
-  num: 0
+  delayTime: 0.5
   isPriting: 0
-  isFrirst: 1
-  timer: 0
   searchLayer:
     serializedVersion: 2
     m_Bits: 64
