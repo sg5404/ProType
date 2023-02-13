@@ -271,6 +271,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   playerSO: {fileID: 11400000, guid: 15af46041f8dcae41a500e740699cb81, type: 2}
+  resetPosition: {fileID: 0}
   MouseUp:
     m_PersistentCalls:
       m_Calls: []
@@ -488,6 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca098e2aeee520140815793e91f254ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stick: {fileID: 0}
+  stickRange: 0
 --- !u!212 &1405362853
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public enum BossPattern
     SKILL_1,
     SKILL_2,
     SKILL_3,
+    DELAY,
 }
 
 public class BossFSM : MonoBehaviour
@@ -28,6 +29,8 @@ public class BossFSM : MonoBehaviour
     private void Start()
     {
         patternState = BossPattern.NONE;
+
+        NextState();
     }
 
     IEnumerator NONEState()
@@ -57,6 +60,33 @@ public class BossFSM : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator DELAYState()
+    {
+        float timer = 0f;
+        while(true)
+        {
+            timer += Time.deltaTime;
+
+            if(timer >= delayTime)
+            {
+                patternState = RandomState();
+                NextState();
+                break;
+            }
+        }
+
+        yield return null;
+    }
+
+    void NextState_Delay()
+    {
+        _sb.Remove(0, _sb.Length);
+        _sb.Append("DELAYState");
+
+        MethodInfo info = GetType().GetMethod(_sb.ToString(), BindingFlags.NonPublic | BindingFlags.Instance);
+        StartCoroutine((IEnumerator)info.Invoke(this, null));
+    }
+
     /// <summary>
     /// 해당 패턴의 실행이 끝났을때 다음 패턴으로 넘겨주는 함수
     /// </summary>
@@ -78,10 +108,10 @@ public class BossFSM : MonoBehaviour
     {
         while (true)
         {
-            int rNum = Random.Range(1, System.Enum.GetValues(typeof(BossPattern)).Length); //첫번째 NONE State 는 배재함
+            int rNum = Random.Range(1, System.Enum.GetValues(typeof(BossPattern)).Length - 1); //첫번째 NONE State 는 배재함 마지막 DELAY State도 배재
 
             _sb.Remove(0, _sb.Length);
-            _sb.Append(System.Enum.GetName(typeof(eRoom), rNum));
+            _sb.Append(System.Enum.GetName(typeof(BossPattern), rNum));
 
             BossPattern pState = (BossPattern)System.Enum.Parse(typeof(BossPattern), _sb.ToString());
 
