@@ -9,6 +9,8 @@ public class Player : Ar
     [SerializeField] Transform resetPosition;
 
     private bool isMoved = false;
+    private Collider2D collide;
+    private SpriteRenderer sprite;
 
     public UnityEvent MouseUp;
     public UnityEvent AfterMove;
@@ -16,8 +18,18 @@ public class Player : Ar
     protected override void Start()
     {
         base.Start();
-        MouseUp.AddListener(() => { isMoved = true; });
+        collide = GetComponent<Collider2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        MouseUp.AddListener(() => { 
+            isMoved = true;
+            isCharge = true;
+            StartCoroutine(InvinsibleTime());
+        });
         AfterMove.AddListener(() => { isMoved = false; });
+        OnHit.AddListener(() => { 
+            StartCoroutine(InvinsibleTime());
+            HPManager.Instance.ChangeHP();
+        });
         ClassSet();
         OnOutDie.AddListener(() => {
             HP -= MaxHP / 10;
@@ -41,7 +53,7 @@ public class Player : Ar
     {
         if (isMoved) AfterMove.Invoke();
         rigid.velocity = (-drag * pushPower)/100;
-        MouseUp?.Invoke(); // ¹ß»ç Á÷ÈÄ ¹ßµ¿ÇÏ´Â Æ®¸®°Å
+        MouseUp?.Invoke(); // ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½ï¿½Ï´ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -49,7 +61,7 @@ public class Player : Ar
         base.OnCollisionEnter2D(collision);
         if (collision.transform.CompareTag("Enemy"))
         {
-            BeforeCrash?.Invoke(); //Ãæµ¹ Á÷Àü ¹ßµ¿ÇÏ´Â Æ®¸®°Å
+            BeforeCrash?.Invoke(); //ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ï¿½ßµï¿½ï¿½Ï´ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½
             BattleManager.Instance.PlayerCrashSet(collision.contacts[0].normal);
         }
     }
@@ -87,7 +99,7 @@ public class Player : Ar
 
     public void SwordSpin()
     {
-        Debug.Log("¿øÇü °ø°Ý");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         Ar _area = Instantiate(playerSO.bullet, null);
         _area.transform.position = transform.position;
         _area.transform.localScale = new Vector2(3, 3);
@@ -96,10 +108,10 @@ public class Player : Ar
 
     public void ShootArrow()
     {
-        Ar[] ars = FindObjectsOfType<Ar>();
-        Ar shortAr = null;
+        Enemy[] ars = FindObjectsOfType<Enemy>();
+        Enemy shortAr = null;
         float shortDis = 0;
-        foreach (Ar trs in ars)
+        foreach (Enemy trs in ars)
         {
             float a = Vector2.Distance(transform.position, trs.transform.position);
             if (shortDis == 0 || a < shortDis)
@@ -109,25 +121,45 @@ public class Player : Ar
                 shortDis = a;
             }
         }
-        Ar _arrow = Instantiate(playerSO.bullet, null);
+        var _arrow = Instantiate(playerSO.bullet, null);
         _arrow.transform.position = transform.position;
         _arrow.SetRigidPower((shortAr.transform.position - transform.position).normalized * 6);
+    }
+
+    private IEnumerator InvinsibleTime()
+    {
+        collide.enabled = false;
+
+        sprite.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        sprite.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        sprite.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        sprite.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        sprite.enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        sprite.enabled = true;
+
+        collide.enabled = true;
+        if (isCharge) isCharge = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Out"))
         {
-            Debug.Log("³ª°¨");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
 
             float temp = 0;
             float _distance = 100000;
-            Room closeRoom = new Room();             //°¡Àå °¡±î¿î ·ë
+            Room closeRoom = new Room();             //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-            //°¡±î¿î°Å Ã£¾Æ¼­ µ¹¾Æ¿À´Â°Å
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ï¿½Â°ï¿½
             Room[] rooms = FindObjectsOfType<Room>();
 
-            //°¡Àå °¡±î¿î ·ëÀ» Ã£±â À§ÇÑ °úÁ¤
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             foreach (Room room in rooms)
             {
                 temp = Vector3.Distance(transform.position, room.transform.position);
@@ -141,6 +173,16 @@ public class Player : Ar
             OnOutDie.Invoke();
 
             transform.position = closeRoom.gameObject.transform.position;
+        }
+        else if(collision.CompareTag("Bullet"))
+        {
+            var bullet = collision.GetComponent<Bullet>();
+            if (!bullet.bulletSO.isEnemyBullet) return;
+
+            HP -= bullet.bulletSO.bulletDamage;
+            OnHit?.Invoke();
+            if (!bullet.bulletSO.isPenetrate)
+                bullet.gameObject.SetActive(false);
         }
     }
 }

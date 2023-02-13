@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3246880054250903658}
   - component: {fileID: 6709673207597097443}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Arrow 1
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9529412, g: 0.0627451, b: 0.59607846, a: 1}
+  m_Color: {r: 0, g: 0.95515823, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -157,4 +157,4 @@ MonoBehaviour:
   OnBattleDie:
     m_PersistentCalls:
       m_Calls: []
-  bulletSO: {fileID: 11400000, guid: 33c4de5a185ef0b43af89e709c2ecc06, type: 2}
+  bulletSO: {fileID: 11400000, guid: 76c439e247723964fadc7a1b3855937e, type: 2}

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc7766b753fc349418760d2edbd6a707, type: 3}
-  m_Name: PlayerTest
+  m_Script: {fileID: 11500000, guid: d9d53f61766defb44a7a2064c0169d3d, type: 3}
+  m_Name: PlayerBullet
   m_EditorClassIdentifier: 
-  weapon: 2
-  bullet: {fileID: 6709673207597097443, guid: d27cac8f26dd96f4dbe456cd381ad04a, type: 3}
-  HP: 150
-  ATK: 30
-  pushPower: 10
+  bulletDamage: 10
+  bulletSpeed: 6
+  isEnemyBullet: 0
