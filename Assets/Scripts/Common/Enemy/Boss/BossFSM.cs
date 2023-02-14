@@ -10,7 +10,6 @@ public enum BossPattern
     SKILL_1,
     SKILL_2,
     SKILL_3,
-    DELAY,
 }
 
 public class BossFSM : MonoBehaviour
@@ -108,7 +107,7 @@ public class BossFSM : MonoBehaviour
     {
         while (true)
         {
-            int rNum = Random.Range(1, System.Enum.GetValues(typeof(BossPattern)).Length - 1); //첫번째 NONE State 는 배재함 마지막 DELAY State도 배재
+            int rNum = Random.Range(1, System.Enum.GetValues(typeof(BossPattern)).Length); //첫번째 NONE State 는 배재함
 
             _sb.Remove(0, _sb.Length);
             _sb.Append(System.Enum.GetName(typeof(BossPattern), rNum));
