@@ -14,7 +14,7 @@ public class KamenRider : Boss
     protected override void Start()
     {
         base.Start();
-        MaxHP = 300;
+        MaxHP = 500;
         HP = MaxHP;
         ATK = 50;
         itemBox.SetActive(false);
