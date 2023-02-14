@@ -7,6 +7,7 @@ public class Player : Ar
 {
     [SerializeField] PlayerSO playerSO;
     [SerializeField] Transform resetPosition;
+    [SerializeField] Bullet sword;
 
     private bool isMoved = false;
     public bool isInvinsible = false;
@@ -77,8 +78,10 @@ public class Player : Ar
         HPManager.Instance.ChangeHP();
     }
 
-    private void ClassSet()
+    public void ClassSet()
     {
+        AfterMove.RemoveListener(SwordSpin);
+        AfterMove.RemoveListener(ShootArrow);
         switch (playerSO.weapon)
         {
             case Weapon.None:
@@ -99,7 +102,7 @@ public class Player : Ar
     public void SwordSpin()
     {
         Debug.Log("���� ����");
-        Ar _area = Instantiate(playerSO.bullet, null);
+        Ar _area = Instantiate(sword, null);
         _area.transform.position = transform.position;
         _area.transform.localScale = new Vector2(3, 3);
         Destroy(_area.gameObject, 1f);

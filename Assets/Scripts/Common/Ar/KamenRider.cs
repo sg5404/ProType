@@ -8,12 +8,14 @@ public class KamenRider : Boss
     [SerializeField] Bullet breath;
     [SerializeField] GameObject p3Warning;
     [SerializeField] GameObject clearText;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     private int stunCounter = 0;
 
     protected override void Start()
     {
         base.Start();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         MaxHP = 500;
         HP = MaxHP;
         ATK = 50;
@@ -43,9 +45,15 @@ public class KamenRider : Boss
 
     public override IEnumerator Pattern2()
     {
-        yield return new WaitForSeconds(2f);
+        spriteRenderer.color = Color.yellow;
+        while(spriteRenderer.color.b<255)
+        {
+            spriteRenderer.color += new Color(0, 0, 13);
+            yield return new WaitForSeconds(2f);
+        }
         if (stunCounter >= 2)
         {
+            spriteRenderer.color = Color.yellow;
             yield return new WaitForSeconds(4f);
         }
         else
@@ -53,6 +61,7 @@ public class KamenRider : Boss
             isCharge = true;
             SetRigidPower((player.transform.position - transform.position).normalized * 50);
         }
+        spriteRenderer.color = Color.yellow;
         stunCounter = 0;
     }
 
