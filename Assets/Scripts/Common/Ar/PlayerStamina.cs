@@ -31,7 +31,7 @@ public class PlayerStamina : MonoBehaviour
     public void UpdateCooltime()
     {
         if(useCooltime>0)
-        useCooltime -= Time.deltaTime*3;
+        useCooltime -= Time.deltaTime;
     }
 
     private IEnumerator StaminaCharge(float power)

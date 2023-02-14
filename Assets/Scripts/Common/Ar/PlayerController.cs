@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        power = Vector2.Distance(stick.localPosition, transform.position)/100;
+        power = Vector2.Distance(stick.localPosition, transform.position)/50;
         if (StaminaManager.Instance.UseStamina(power))
             player.Dash(stick.localPosition);
         stick.anchoredPosition = Vector2.zero;

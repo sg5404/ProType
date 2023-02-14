@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerTest
   m_EditorClassIdentifier: 
   weapon: 2
-  bullet: {fileID: 3997128448349154292, guid: 8eb8c202057377d48b7cd0bb01cf9bdd, type: 3}
+  bullet: {fileID: 6709673207597097443, guid: d27cac8f26dd96f4dbe456cd381ad04a, type: 3}
   HP: 150
   ATK: 30
   pushPower: 10

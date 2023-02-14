@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3744209042418966011}
   - component: {fileID: 8994137175593306037}
-  - component: {fileID: 3997128448349154292}
   - component: {fileID: 1519109460083931513}
   - component: {fileID: 3246880054250903658}
+  - component: {fileID: 6709673207597097443}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Ar
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5317889584392246962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.58, y: 1.61, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 98
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0.95515823, b: 1, a: 1}
+  m_Color: {r: 0.9529412, g: 0.0627451, b: 0.59607846, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,55 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3997128448349154292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5317889584392246962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9181e5330ce9f34c990b93384c36a5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arSO: {fileID: 11400000, guid: 7fca336dfe6ae304ab50bd558877f9d1, type: 2}
-  MouseUp:
-    m_PersistentCalls:
-      m_Calls: []
-  BeforeCrash:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterCrash:
-    m_PersistentCalls:
-      m_Calls: []
-  BeforeBattle:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterBattle:
-    m_PersistentCalls:
-      m_Calls: []
-  BeforeAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  BeforeDefence:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterDefence:
-    m_PersistentCalls:
-      m_Calls: []
-  AfterMove:
-    m_PersistentCalls:
-      m_Calls: []
-  OnOutDie:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBattleDie:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!58 &1519109460083931513
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -173,3 +124,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6709673207597097443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317889584392246962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e151c74afe0d6f64ead28861f6ee0e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeforeCrash:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterCrash:
+    m_PersistentCalls:
+      m_Calls: []
+  BeforeBattle:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterBattle:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOutDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBattleDie:
+    m_PersistentCalls:
+      m_Calls: []
+  bulletSO: {fileID: 11400000, guid: 33c4de5a185ef0b43af89e709c2ecc06, type: 2}

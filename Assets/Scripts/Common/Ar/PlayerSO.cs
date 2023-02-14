@@ -13,7 +13,7 @@ public enum Weapon
 public class PlayerSO : ScriptableObject
 {
     public Weapon weapon;
-    public Ar bullet;
+    public Bullet bullet;
     public float HP;
     public float ATK;
     public float pushPower;

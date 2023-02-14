@@ -20,18 +20,25 @@ public enum Phase
     LAST = 99
 }
 
-public class Boss : Ar
+public class Boss : Enemy
 {
     protected BossMoveState currentState;
     protected Phase currentPhase;
     protected Animator animator;
+    protected Player player;
 
     public UnityEvent attackEvent;
 
     protected override void Start()
     {
-        base.Start();
+        rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        player = FindObjectOfType<Player>();
+        AfterBattle.AddListener(HPChange);
+        OnHit.AddListener(HPChange);
+        OnHit.AddListener(() => { DeadCheck(); });
+        OnBattleDie.AddListener(()=> { gameObject.SetActive(false); });
+        OnOutDie.AddListener(() => { gameObject.SetActive(false); });
     }
 
     protected virtual void Idle()
@@ -54,45 +61,54 @@ public class Boss : Ar
         animator.SetBool("Move", false);
         animator.SetBool("Attack", true);
 
-        int pattern = Random.Range(1, 6);
-        Pattern(pattern);
 
     }
 
-    protected virtual void Pattern(int num)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        UnityAction a = num switch
+        if (collision.CompareTag("Out"))
         {
-            1=>Pattern1,
-            2=>Pattern2,
-            3=>Pattern3,
-            4=>Pattern4,
-            5=>Pattern5,
-            _ => () => { Debug.LogWarning("Pattern 함수에서 발생한 오류 ^v^"); }
-        };
-        a.Invoke();
+            //그냥 죽이면 됨
+            OnOutDie.Invoke();
+            //Destroy 말고 SetActive 로 꺼주게만 해주면 좋을듯
+        }
+        else if (collision.CompareTag("Bullet"))
+        {
+            var bullet = collision.GetComponent<Bullet>();
+            if (bullet.bulletSO.isEnemyBullet) return;
+
+            HP -= bullet.bulletSO.bulletDamage;
+            OnHit?.Invoke();
+            if (!bullet.bulletSO.isPenetrate)
+                bullet.gameObject.SetActive(false);
+        }
     }
 
-//------------------------------------------------------------------
+    //------------------------------------------------------------------
 
-    protected virtual void Pattern1()
+    public virtual IEnumerator Pattern1()
     {
         Debug.Log("패턴 1 실행");
+        yield return null;
     }
-    protected virtual void Pattern2()
+    public virtual IEnumerator Pattern2()
     {
         Debug.Log("패턴 2 실행");
+        yield return null;
     }
-    protected virtual void Pattern3()
+    public virtual IEnumerator Pattern3()
     {
         Debug.Log("패턴 3 실행");
+        yield return null;
     }
-    protected virtual void Pattern4()
+    public virtual IEnumerator Pattern4()
     {
         Debug.Log("패턴 4 실행");
+        yield return null;
     }
-    protected virtual void Pattern5()
+    public virtual IEnumerator Pattern5()
     {
         Debug.Log("패턴 5 실행");
+        yield return null;
     }
 }

@@ -16,14 +16,15 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (a != null) PlayerCrashResult(); 
     }
 
-    public void EnemyCrashSet(Enemy bullet, Vector2 nomal)
+    public void EnemyCrashSet(Enemy bullet, Vector2 nomal, bool isCharge)
     {
         if (a == null)
         {
             a = bullet;
             aNomal = nomal;
 
-            if(player!=null) PlayerCrashResult();
+            if (player != null && isCharge && !player.isCharge) EnemyAttackCrashResult();
+            else PlayerCrashResult();
         }
         else if (b == null)
         {
@@ -38,10 +39,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         player.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
         a.BeforeBattle?.Invoke(); //
-        Debug.Log("플레이어 충돌");
-
-        player.BeforeDefence?.Invoke();
-        a.BeforeAttack?.Invoke();
+        Debug.Log("플레이어 공격");
 
         if (DamageCalculate())
         {
@@ -51,8 +49,27 @@ public class BattleManager : MonoSingleton<BattleManager>
             Debug.Log("데미지 계산");
         }
 
-        player.AfterAttack?.Invoke();
-        a.AfterDefence?.Invoke();
+        player.AfterBattle?.Invoke(); // 공격 직후 발동하는 트리거
+        a.AfterBattle?.Invoke(); //
+
+        player.AttackFinish();
+        a.AttackFinish();
+        a = null;
+    }
+
+    private void EnemyAttackCrashResult()
+    {
+        player.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
+        a.BeforeBattle?.Invoke(); //
+        Debug.Log("플레이어 피격");
+
+        if (PlayerDamageCalculate())
+        {
+            var reflect = Vector2.Reflect(player.lastVelocity.normalized, pNomal);
+            player.rigid.velocity = (reflect);
+            a.rigid.velocity = (-reflect + a.lastVelocity / 2);
+            Debug.Log("데미지 계산");
+        }
 
         player.AfterBattle?.Invoke(); // 공격 직후 발동하는 트리거
         a.AfterBattle?.Invoke(); //
@@ -61,6 +78,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         a.AttackFinish();
         a = null;
     }
+
     private void EnemyCrashResult()
     {
         a.BeforeBattle?.Invoke(); //
@@ -68,9 +86,6 @@ public class BattleManager : MonoSingleton<BattleManager>
         Debug.Log("적 끼리 충돌");
         if (a.lastVelocity.magnitude > b.lastVelocity.magnitude)
         {
-            a.BeforeAttack?.Invoke();
-            b.BeforeDefence?.Invoke();
-
             if (EnemyDamageCalculate())
             {
                 var reflect = Vector2.Reflect(a.lastVelocity.normalized, aNomal);
@@ -78,25 +93,16 @@ public class BattleManager : MonoSingleton<BattleManager>
                 b.rigid.velocity = (-reflect + a.lastVelocity);
                 Debug.Log("데미지 계산");
             }
-
-            a.AfterAttack?.Invoke();
-            b.AfterDefence?.Invoke();
         }
         else if (a.lastVelocity.magnitude < b.lastVelocity.magnitude)
         {
-            b.BeforeAttack?.Invoke();
-            a.BeforeDefence?.Invoke();
-
-            if (DamageCalculate())
+            if (EnemyDamageCalculate())
             {
                 var reflect = Vector2.Reflect(b.lastVelocity.normalized, bNomal);
                 b.rigid.velocity = (reflect);
                 a.rigid.velocity = (-reflect + b.lastVelocity);
                 Debug.Log("데미지 계산");
             }
-
-            b.AfterAttack?.Invoke();
-            a.AfterDefence?.Invoke();
         }
         a.AfterBattle?.Invoke(); //
         b.AfterBattle?.Invoke(); // 공격 직후 발동하는 트리거
@@ -140,6 +146,16 @@ public class BattleManager : MonoSingleton<BattleManager>
 
         a.HP -= FinalDamage;
         b.HP -= FinalDamage;
+
+        return true;
+    }
+
+    private bool PlayerDamageCalculate()
+    {
+        float FinalDamage = a.ATK;
+
+        if (player.isInvinsible || player.isCharge) return true;
+        player.HP -= FinalDamage;
 
         return true;
     }

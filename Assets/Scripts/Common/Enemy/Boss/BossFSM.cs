@@ -14,6 +14,8 @@ public enum BossPattern
 
 public class BossFSM : MonoBehaviour
 {
+    Boss boss;
+
     public BossPattern patternState;
 
     public float delayTime = 5.0f;
@@ -23,6 +25,7 @@ public class BossFSM : MonoBehaviour
     private void Awake()
     {
         _sb = new StringBuilder();
+        boss = GetComponent<Boss>();
     }
 
     private void Start()
@@ -46,17 +49,23 @@ public class BossFSM : MonoBehaviour
 
     IEnumerator SKILL_1State()
     {
-        yield return null;
+        yield return StartCoroutine(boss.Pattern1());
+
+        NextState_Delay();
     }
 
     IEnumerator SKILL_2State()
     {
-        yield return null;
+        yield return StartCoroutine(boss.Pattern2());
+
+        NextState_Delay();
     }
 
     IEnumerator SKILL_3State()
     {
-        yield return null;
+        yield return StartCoroutine(boss.Pattern3());
+
+        NextState_Delay();
     }
 
     IEnumerator DELAYState()
@@ -72,9 +81,8 @@ public class BossFSM : MonoBehaviour
                 NextState();
                 break;
             }
+            yield return null;
         }
-
-        yield return null;
     }
 
     void NextState_Delay()
