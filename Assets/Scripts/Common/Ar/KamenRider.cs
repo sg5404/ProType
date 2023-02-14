@@ -6,6 +6,7 @@ public class KamenRider : Boss
 {
     [SerializeField] GameObject itemBox;
     [SerializeField] Bullet breath;
+    [SerializeField] GameObject p3Warning;
 
     private int stunCounter = 0;
 
@@ -51,5 +52,23 @@ public class KamenRider : Boss
             SetRigidPower((player.transform.position - transform.position).normalized * 50);
         }
         stunCounter = 0;
+    }
+
+    public override IEnumerator Pattern3()
+    {
+        Warning[] p3Warnings = new Warning[5];
+        for (int i = 0; i < 5; i++)
+        {
+            float x = Random.Range(-5f, 5f);
+            float y = Random.Range(-5f, 5f);
+            Vector3 warningPos = new Vector3(x, y);
+
+            p3Warnings[i] = Instantiate(p3Warning, warningPos, Quaternion.identity).GetComponent<Warning>();
+        }
+        yield return new WaitForSeconds(1.5f);
+        foreach (var warnObj in p3Warnings)
+        {
+            warnObj.Blow();
+        }
     }
 }
