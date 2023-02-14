@@ -14,8 +14,13 @@ public class EscManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            EscPanel.SetActive(!EscPanel.activeSelf);
+            TogglePanel();
         }
+    }
+
+    public void TogglePanel()
+    {
+        EscPanel.SetActive(!EscPanel.activeSelf);
     }
 
     public void ExitGame()
