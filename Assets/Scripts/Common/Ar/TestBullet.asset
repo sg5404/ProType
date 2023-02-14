@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestBullet
   m_EditorClassIdentifier: 
   bulletDamage: 14
-  bulletSpeed: 5
+  bulletSpeed: 10
   isEnemyBullet: 1
   isPenetrate: 1

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: PlayerBullet
   m_EditorClassIdentifier: 
   bulletDamage: 10
-  bulletSpeed: 6
+  bulletSpeed: 15
   isEnemyBullet: 0
+  isPenetrate: 0

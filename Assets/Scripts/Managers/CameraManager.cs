@@ -18,7 +18,6 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        cam.transform.position = Vector3.Lerp(transform.position, player.position, Time.deltaTime * 2f);
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -10);
+        cam.transform.position = Vector3.Lerp(cam.transform.position, player.position, Time.deltaTime * 4f) + (Vector3.back * 10);
     }
 }

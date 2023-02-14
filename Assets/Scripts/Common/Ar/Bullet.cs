@@ -12,9 +12,10 @@ public class Bullet : Ar
         Destroy(gameObject, 10f);
     }
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Object"))
-            Destroy(gameObject);
+            Destroy(gameObject, 0.2f);
     }
 }
