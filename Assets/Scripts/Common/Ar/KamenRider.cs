@@ -7,6 +7,7 @@ public class KamenRider : Boss
     [SerializeField] GameObject itemBox;
     [SerializeField] Bullet breath;
     [SerializeField] GameObject p3Warning;
+    [SerializeField] GameObject clearText;
 
     private int stunCounter = 0;
 
@@ -25,6 +26,7 @@ public class KamenRider : Boss
     private void SummonItemBox()
     {
         itemBox.SetActive(true);
+        clearText.SetActive(true);
     }
 
     public override IEnumerator Pattern1()
