@@ -9,7 +9,7 @@ public class Player : Ar
     [SerializeField] Transform resetPosition;
 
     private bool isMoved = false;
-    private Collider2D collide;
+    public bool isInvinsible = false;
     private SpriteRenderer sprite;
 
     public UnityEvent MouseUp;
@@ -18,12 +18,11 @@ public class Player : Ar
     protected override void Start()
     {
         base.Start();
-        collide = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
         MouseUp.AddListener(() => { 
             isMoved = true;
             isCharge = true;
-            StartCoroutine(InvinsibleTime());
+            StartCoroutine(DashInvinsible());
         });
         AfterMove.AddListener(() => { isMoved = false; });
         OnHit.AddListener(() => { 
@@ -128,22 +127,22 @@ public class Player : Ar
 
     private IEnumerator InvinsibleTime()
     {
-        collide.enabled = false;
+        isInvinsible = true;
 
-        sprite.enabled = false;
-        yield return new WaitForSeconds(0.05f);
-        sprite.enabled = true;
-        yield return new WaitForSeconds(0.05f);
-        sprite.enabled = false;
-        yield return new WaitForSeconds(0.05f);
-        sprite.enabled = true;
-        yield return new WaitForSeconds(0.05f);
-        sprite.enabled = false;
-        yield return new WaitForSeconds(0.05f);
-        sprite.enabled = true;
+        sprite.color = Color.black;
+        yield return new WaitForSeconds(0.3f);
+        sprite.color = Color.green;
 
-        collide.enabled = true;
-        if (isCharge) isCharge = false;
+        isInvinsible = false;
+    }
+
+    private IEnumerator DashInvinsible()
+    {
+        isCharge = true;
+
+        yield return new WaitForSeconds(0.25f);
+
+        isCharge = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
