@@ -51,7 +51,7 @@ public class Player : Ar
     public void Dash(Vector2 drag)
     {
         if (isMoved) AfterMove.Invoke();
-        rigid.velocity = (-drag * pushPower)/100;
+        rigid.velocity = (-drag * pushPower)/70;
         MouseUp?.Invoke(); // �߻� ���� �ߵ��ϴ� Ʈ����
     }
 

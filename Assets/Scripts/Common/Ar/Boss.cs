@@ -35,6 +35,8 @@ public class Boss : Enemy
         animator = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
         AfterBattle.AddListener(HPChange);
+        OnHit.AddListener(HPChange);
+        OnHit.AddListener(() => { DeadCheck(); });
         OnBattleDie.AddListener(()=> { gameObject.SetActive(false); });
         OnOutDie.AddListener(() => { gameObject.SetActive(false); });
     }
