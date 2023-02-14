@@ -22,6 +22,7 @@ public enum Phase
 
 public class Boss : Enemy
 {
+    [SerializeField] protected GameObject hpBar;
     protected BossMoveState currentState;
     protected Phase currentPhase;
     protected Animator animator;
@@ -34,6 +35,11 @@ public class Boss : Enemy
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
+        OnHit.AddListener(HPChange);
+        AfterBattle.AddListener(HPChange);
+        OnHit.AddListener(() => { DeadCheck(); });
+        OnBattleDie.AddListener(()=> { gameObject.SetActive(false); });
+        OnOutDie.AddListener(() => { gameObject.SetActive(false); });
     }
 
     protected virtual void Idle()
@@ -77,6 +83,13 @@ public class Boss : Enemy
             if (!bullet.bulletSO.isPenetrate)
                 bullet.gameObject.SetActive(false);
         }
+    }
+
+    protected virtual void HPChange()
+    {
+        if(HP>=0)
+        hpBar.transform.localScale = new Vector2(HP / MaxHP, 1);
+        Debug.Log(HP / MaxHP);
     }
 
     //------------------------------------------------------------------

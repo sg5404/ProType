@@ -39,9 +39,9 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         player.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
         a.BeforeBattle?.Invoke(); //
-        Debug.Log("플레이어 피격");
+        Debug.Log("플레이어 공격");
 
-        if (PlayerDamageCalculate())
+        if (DamageCalculate())
         {
             var reflect = Vector2.Reflect(player.lastVelocity.normalized, pNomal);
             player.rigid.velocity = (reflect);
@@ -61,9 +61,9 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         player.BeforeBattle?.Invoke(); //공격 직전 발동하는 트리거
         a.BeforeBattle?.Invoke(); //
-        Debug.Log("플레이어 충돌");
+        Debug.Log("플레이어 피격");
 
-        if (DamageCalculate())
+        if (PlayerDamageCalculate())
         {
             var reflect = Vector2.Reflect(player.lastVelocity.normalized, pNomal);
             player.rigid.velocity = (reflect);
@@ -154,6 +154,7 @@ public class BattleManager : MonoSingleton<BattleManager>
     {
         float FinalDamage = a.ATK;
 
+        if (player.isInvinsible || player.isCharge) return true;
         player.HP -= FinalDamage;
 
         return true;
