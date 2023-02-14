@@ -14,7 +14,7 @@ public class Warning : MonoBehaviour
 
     public void Blow()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color32(160, 0, 0, 255);
         collider.enabled = true;
         Destroy(gameObject, 1f);
     }

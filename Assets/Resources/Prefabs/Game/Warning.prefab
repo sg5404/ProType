@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2895017651299381492}
   - component: {fileID: 2895017651299381498}
   - component: {fileID: 365514106}
+  - component: {fileID: 4497595203674614806}
   m_Layer: 0
   m_Name: Warning
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.69411767}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.74509805}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -93,7 +94,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2895017651299381493}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -114,3 +115,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5c2499601780244b9182b9e6fa6d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4497595203674614806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2895017651299381493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e151c74afe0d6f64ead28861f6ee0e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeforeCrash:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterCrash:
+    m_PersistentCalls:
+      m_Calls: []
+  BeforeBattle:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterBattle:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnOutDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBattleDie:
+    m_PersistentCalls:
+      m_Calls: []
+  bulletSO: {fileID: 11400000, guid: a9dfe3e1d2541ae43a3cf09d1089274d, type: 2}
