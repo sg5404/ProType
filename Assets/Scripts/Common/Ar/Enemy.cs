@@ -5,11 +5,14 @@ using UnityEngine;
 public class Enemy : Ar
 {
     [SerializeField] EnemySO enemySO;
+    [SerializeField] protected GameObject hpBar;
 
     protected override void Start()
     {
         base.Start();
         ClassSet();
+        OnHit.AddListener(HPChange);
+        OnHit.AddListener(() => { DeadCheck(); });
         OnOutDie.AddListener(() => { gameObject.SetActive(false); });
         OnBattleDie.AddListener(() => { gameObject.SetActive(false); });
     }
@@ -39,6 +42,13 @@ public class Enemy : Ar
             BeforeCrash?.Invoke(); //충돌 직전 발동하는 트리거
             BattleManager.Instance.EnemyCrashSet(this, collision.contacts[0].normal, isCharge);
         }
+    }
+
+    protected virtual void HPChange()
+    {
+        if (HP >= 0)
+            hpBar.transform.localScale = new Vector2(HP / MaxHP, 1);
+        Debug.Log(HP / MaxHP);
     }
 
     private void ClassSet()
